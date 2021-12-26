@@ -7,6 +7,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPA Calculator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <style>
+        input:focus,
+        textarea:focus {
+            /* padding: 8px 8px 8px 8px !important; */
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #482fd3 !important;
+            outline-width: 5;
+            font-weight: 400
+        }
+
+
+
+        /* input,
+        textarea {
+            background-color: #F3E5F5;
+            padding: 8px 0px 8px 0px !important;
+            width: 100%;
+            border-radius: 0 !important;
+            box-sizing: border-box;
+            border: none !important;
+            border-bottom: 1px solid #F3E5F5 !important;
+            font-size: 18px !important;
+            color: #000 !important;
+            font-weight: 300
+        } */
+
+        button:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            outline-width: 0
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem
+        }
+
+        .form-control-placeholder {
+            position: absolute;
+            top: 0;
+            margin: 7px 0 0 20px;
+            transition: all 300ms;
+            opacity: 0.5;
+            background-color: #ffffff;
+            color: #482fd3;
+            font-size: 90%;
+        }
+
+        .form-control:focus+.form-control-placeholder,
+        .form-control:valid+.form-control-placeholder {
+            font-size: 70%;
+            transform: translate3d(0, -90%, 0);
+            opacity: 1
+        }
+
+        option {
+            color: #482fd3;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,23 +76,22 @@
 
         <div class="h1">GPA Calculator</div>
 
-        <div class="card panel-info">
-            <div class="card-header" id="gpa">
-                GPA 0.0
+        <div class="card card-primary text-primary border-primary border-top-primary border-top-3">
+            <div class="card-header">
+                Semester
             </div>
-            <div class="card-body">
-                <div class="row col-12" id="data_row"></div>
-            </div>
-        </div>
-        <button type="button" onclick="addSubject();" class="btn btn-primary mt-2">Add Subject</button>
-        <button type="button" onclick="removeLasetSub();" class="btn btn-primary mt-2">Remove Last Subject</button>
-        <button type="button" onclick="calGPA();" class="btn btn-primary mt-2">Calculate</button>
-
-        <div class="card-body">
-            <div class="" id="data_row">
+            <div class="card-body row" id="data_row">
 
             </div>
+            <div class="card-footer">
+                <small class="text-muted" id='gpa'>GPA : 0.0</small>
+            </div>
         </div>
+        <button type="button" onclick="addSubject();" class="btn btn-primary mt-2"><b>+</b></button>
+        <button type="button" onclick="removeLasetSub();" class="btn btn-danger mt-2"><b>-</b></button>
+        <button type="button" onclick="calGPA();" class="btn btn-success mt-2">Calculate</button>
+
+
 
     </div>
 
@@ -43,68 +104,69 @@
         var creditGrade = 0;
         var gpa = document.getElementById("gpa");
 
+        var container_breakpoints = "col-12 col-sm-6 col-lg-5";
+
         function addSubject() {
             // data row
             var container = document.getElementById("data_row");
 
-            // input group
-            var input_group = document.createElement("class");
-            input_group.classList = "input-group center-block mt-2";
-            input_group.id = "input_group_" + subCount;
-            container.appendChild(input_group);
+            // Subject_Container //////////////////////////////////////////////////
+            var div_form_label_group = document.createElement("div");
+            div_form_label_group.classList = "form-group " + container_breakpoints;
+            div_form_label_group.id = "subject_group_" + subCount;
+            container.appendChild(div_form_label_group);
 
-            // append div for lbl subject
-            var input_group_prepend = document.createElement("class");
-            input_group_prepend.classList = "input-group-prepend d-none d-md-block";
-            input_group.appendChild(input_group_prepend);
+            // Subject //////////////////////////////////////////////////
+            var input_subject = document.createElement("input");
+            input_subject.type = "text";
+            input_subject.id = "sub_" + subCount;
+            input_subject.classList = "form-control";
+            input_subject.setAttribute("required", "");
+            div_form_label_group.appendChild(input_subject);
+            //--------------------------------------------------
+            var lbl_subject = document.createElement("label");
+            lbl_subject.htmlFor = "sub_" + subCount;
+            lbl_subject.innerHTML = "Subject";
+            lbl_subject.classList = "form-control-placeholder";
+            div_form_label_group.appendChild(lbl_subject);
 
-            // lbl subject
-            var dev_span_sub_lbl = document.createElement("span");
-            dev_span_sub_lbl.classList = "input-group-text";
-            dev_span_sub_lbl.textContent = "Subject";
-            input_group_prepend.appendChild(dev_span_sub_lbl);
 
-            // input subject
-            var input_sub = document.createElement("input");
-            input_sub.classList = "form-control mr-3 col-md-3 ";
-            input_sub.placeholder = "Subject";
-            input_sub.ariaLabel = "Subject";
-            input_group.appendChild(input_sub);
-
-            // append div for lbl credit
-            input_group_prepend = document.createElement("class");
-            input_group_prepend.classList = "input-group-prepend d-none d-md-block";
-            input_group.appendChild(input_group_prepend);
-
-            // lbl credit
-            var dev_span_credit_lbl = document.createElement("span");
-            dev_span_credit_lbl.classList = "input-group-text";
-            dev_span_credit_lbl.textContent = "Credits";
-            input_group_prepend.appendChild(dev_span_credit_lbl);
-
-            // input credit
+            // Credit_Container //////////////////////////////////////////////////
+            div_form_label_group = document.createElement("div");
+            div_form_label_group.classList = "form-group " + container_breakpoints;
+            div_form_label_group.id = "credit_group_" + subCount;
+            container.appendChild(div_form_label_group);
+            // Credit //////////////////////////////////////////////////
             var input_credit = document.createElement("input");
-            input_credit.classList = "form-control col-md-3 mr-3";
-            input_credit.placeholder = "Credits";
-            input_credit.ariaLabel = "Credits";
+            input_credit.type = "text";
             input_credit.id = "credit_" + subCount;
-            input_group.appendChild(input_credit);
+            input_credit.classList = "form-control";
+            input_credit.setAttribute("required", "");
+            div_form_label_group.appendChild(input_credit);
+            //--------------------------------------------------
+            var lbl_credit = document.createElement("label");
+            lbl_credit.htmlFor = "credit_" + subCount;
+            lbl_credit.classList = "form-control-placeholder";
+            lbl_credit.innerHTML = "Credits";
+            div_form_label_group.appendChild(lbl_credit);
+            //////////////////////////////////////////////////
 
 
-            // append div for dropdown
-            input_group_prepend = document.createElement("class");
-            input_group_prepend.classList = "input-group-prepend";
-            input_group.appendChild(input_group_prepend);
-
-            // dropdown
+            // Dropdown_Container //////////////////////////////////////////////////
+            div_form_label_group = document.createElement("div");
+            div_form_label_group.classList = "form-group";
+            div_form_label_group.id = "dropdown_group_" + subCount;
+            div_form_label_group.setAttribute("style", "padding-left: 15px;")
+            container.appendChild(div_form_label_group);
+            // dropdown //////////////////////////////////////////////////
             var dd_span = document.createElement("span");
             dd_span.classList = "select-wrapper";
-            dd_span.appendChild(input_group_prepend);
+
             var grade_select = document.createElement("select");
             grade_select.classList = "grade form-control";
             grade_select.id = "grade_" + subCount;
-            var option = document.createElement("option");
 
+            var option = document.createElement("option");
             option.value = 1; option.text = "A+"; option.value = 4.0; grade_select.appendChild(option); option = document.createElement("option");
             option.value = 2; option.text = "A"; option.value = 4.0; grade_select.appendChild(option); option = document.createElement("option");
             option.value = 3; option.text = "A-"; option.value = 3.7; grade_select.appendChild(option); option = document.createElement("option");
@@ -118,12 +180,15 @@
             option.value = 12; option.text = "D"; option.value = 1.0; grade_select.appendChild(option); option = document.createElement("option");
             option.value = 13; option.text = "E"; option.value = 0; grade_select.appendChild(option);
 
-            grade_select.appendChild(option);
+            div_form_label_group.appendChild(dd_span);
             dd_span.appendChild(grade_select);
-            input_group.appendChild(dd_span);
+            grade_select.appendChild(option);
+
+
+
+
 
             subCount = subCount + 1;
-
         }
 
         function calGPA() {
@@ -144,8 +209,8 @@
                 creditGrade = creditGrade + tmp;
                 totCredit = totCredit + parseInt(credit);
 
-                gpa.textContent = "GPA " + (creditGrade / totCredit);
-                gpa.innerHTML = "GPA " + (creditGrade / totCredit);
+                gpa.textContent = "GPA : " + (creditGrade / totCredit);
+                gpa.innerHTML = "GPA : " + (creditGrade / totCredit);
                 console.log(creditGrade / totCredit);
 
             }
@@ -157,14 +222,22 @@
                 return;
             }
 
-            var item = document.getElementById("input_group_" + (subCount - 1));
+            var item = document.getElementById("subject_group_" + (subCount - 1));
+            item.remove();
+
+            item = document.getElementById("credit_group_" + (subCount - 1));
+            item.remove();
+
+            item = document.getElementById("dropdown_group_" + (subCount - 1));
             item.remove();
             subCount = subCount - 1;
         }
 
         addSubject();
 
+
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
