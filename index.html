@@ -21,7 +21,7 @@
 
         input,
         textarea {
-            padding: 0px 0px 0px 0px !important;
+            padding: 0px 0px 0px 10px !important;
             margin: 0px 0px 0px 0px !important;
         }
 
@@ -118,7 +118,7 @@
             div_form_label_group.appendChild(input_subject);
             //--------------------------------------------------
             var lbl_subject = document.createElement("label");
-            lbl_subject.htmlFor = "sub_" + subCount;
+            lbl_subject.htmlFor = "sub_lbl_" + subCount;
             lbl_subject.innerHTML = "Subject";
             lbl_subject.classList = "form-control-placeholder";
             div_form_label_group.appendChild(lbl_subject);
@@ -138,7 +138,7 @@
             div_form_label_group.appendChild(input_credit);
             //--------------------------------------------------
             var lbl_credit = document.createElement("label");
-            lbl_credit.htmlFor = "credit_" + subCount;
+            lbl_credit.htmlFor = "credit_lbl_" + subCount;
             lbl_credit.classList = "form-control-placeholder";
             lbl_credit.innerHTML = "Credits";
             div_form_label_group.appendChild(lbl_credit);
