@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GPA Calculator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 </head>
 
@@ -23,7 +23,15 @@
             </div>
         </div>
         <button type="button" onclick="addSubject();" class="btn btn-primary mt-2">Add Subject</button>
+        <button type="button" onclick="removeLasetSub();" class="btn btn-primary mt-2">Remove Last Subject</button>
         <button type="button" onclick="calGPA();" class="btn btn-primary mt-2">Calculate</button>
+
+        <div class="card-body">
+            <div class="" id="data_row">
+
+            </div>
+        </div>
+
     </div>
 
 
@@ -42,11 +50,12 @@
             // input group
             var input_group = document.createElement("class");
             input_group.classList = "input-group center-block mt-2";
+            input_group.id = "input_group_" + subCount;
             container.appendChild(input_group);
 
             // append div for lbl subject
             var input_group_prepend = document.createElement("class");
-            input_group_prepend.classList = "input-group-prepend";
+            input_group_prepend.classList = "input-group-prepend d-none d-md-block";
             input_group.appendChild(input_group_prepend);
 
             // lbl subject
@@ -57,14 +66,14 @@
 
             // input subject
             var input_sub = document.createElement("input");
-            input_sub.classList = "form-control col-3 mr-3";
-            input_sub.placeholder = "Ex. GIS1001 (optional)";
+            input_sub.classList = "form-control mr-3 col-md-3 ";
+            input_sub.placeholder = "Subject";
             input_sub.ariaLabel = "Subject";
             input_group.appendChild(input_sub);
 
             // append div for lbl credit
             input_group_prepend = document.createElement("class");
-            input_group_prepend.classList = "input-group-prepend";
+            input_group_prepend.classList = "input-group-prepend d-none d-md-block";
             input_group.appendChild(input_group_prepend);
 
             // lbl credit
@@ -75,8 +84,8 @@
 
             // input credit
             var input_credit = document.createElement("input");
-            input_credit.classList = "form-control col-3 mr-3";
-            input_credit.placeholder = "Ex. 2";
+            input_credit.classList = "form-control col-md-3 mr-3";
+            input_credit.placeholder = "Credits";
             input_credit.ariaLabel = "Credits";
             input_credit.id = "credit_" + subCount;
             input_group.appendChild(input_credit);
@@ -117,8 +126,6 @@
 
         }
 
-        addSubject();
-
         function calGPA() {
 
             for (var i = 1; i < subCount; i++) {
@@ -143,6 +150,19 @@
 
             }
         }
+
+        function removeLasetSub() {
+
+            if (subCount == 1) {
+                return;
+            }
+
+            var item = document.getElementById("input_group_" + (subCount - 1));
+            item.remove();
+            subCount = subCount - 1;
+        }
+
+        addSubject();
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
