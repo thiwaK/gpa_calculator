@@ -19,21 +19,11 @@
             font-weight: 400
         }
 
-
-
-        /* input,
+        input,
         textarea {
-            background-color: #F3E5F5;
-            padding: 8px 0px 8px 0px !important;
-            width: 100%;
-            border-radius: 0 !important;
-            box-sizing: border-box;
-            border: none !important;
-            border-bottom: 1px solid #F3E5F5 !important;
-            font-size: 18px !important;
-            color: #000 !important;
-            font-weight: 300
-        } */
+            padding: 0px 0px 0px 0px !important;
+            margin: 0px 0px 0px 0px !important;
+        }
 
         button:focus {
             -moz-box-shadow: none !important;
@@ -44,7 +34,7 @@
 
         .form-group {
             position: relative;
-            margin-bottom: 1.5rem
+            margin-bottom: 0rem
         }
 
         .form-control-placeholder {
@@ -104,7 +94,10 @@
         var creditGrade = 0;
         var gpa = document.getElementById("gpa");
 
-        var container_breakpoints = "col-12 col-sm-6 col-lg-5";
+        var margine_breakpoints = " mb-1 mb-sm-2";
+        var container_breakpoints = "col-12 col-sm-6 col-lg-5" + margine_breakpoints;
+        var container_2_breakpoints = "col-12 col-sm-12 col-lg-2 " + "mb-3 mb-sm-5 mb-lg-0";
+
 
         function addSubject() {
             // data row
@@ -138,7 +131,7 @@
             container.appendChild(div_form_label_group);
             // Credit //////////////////////////////////////////////////
             var input_credit = document.createElement("input");
-            input_credit.type = "text";
+            input_credit.type = "number";
             input_credit.id = "credit_" + subCount;
             input_credit.classList = "form-control";
             input_credit.setAttribute("required", "");
@@ -154,7 +147,7 @@
 
             // Dropdown_Container //////////////////////////////////////////////////
             div_form_label_group = document.createElement("div");
-            div_form_label_group.classList = "form-group";
+            div_form_label_group.classList = "form-group " + container_2_breakpoints;
             div_form_label_group.id = "dropdown_group_" + subCount;
             div_form_label_group.setAttribute("style", "padding-left: 15px;")
             container.appendChild(div_form_label_group);
