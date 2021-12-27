@@ -98,8 +98,6 @@
     <script type='text/javascript'>
 
         var subCount = 1;
-        var totCredit = 0;
-        var creditGrade = 0;
         var gpa = document.getElementById("gpa");
 
         var margine_breakpoints = "mb-3 mb-sm-3";
@@ -194,15 +192,19 @@
         }
 
         function calGPA() {
+            var totCredit = 0;
+            var creditGrade = 0;
 
             for (var i = 1; i < subCount; i++) {
                 var credit = document.getElementById("credit_" + i).value;
                 var grade = document.getElementById("grade_" + i).value;
 
                 if (grade == null || grade == "") {
+                    gpa.textContent = "GPA : Check your inputs"
                     return;
                 }
                 if (credit == null || credit == "") {
+                    gpa.textContent = "GPA : Check your inputs"
                     return;
                 }
 
